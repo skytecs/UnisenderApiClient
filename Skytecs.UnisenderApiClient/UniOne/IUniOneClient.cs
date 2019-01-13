@@ -4,6 +4,6 @@ namespace Skytecs.UniSenderApiClient
 {
     public interface IUniOneClient
     {
-        Task<SendResult> Send(SendRequest request);
+        Task<UniOneSendResult> Send(UniOneSendRequest request);
     }
 }

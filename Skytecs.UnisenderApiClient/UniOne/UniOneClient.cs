@@ -22,9 +22,13 @@ namespace Skytecs.UniSenderApiClient
         {
             _options = options ?? throw new ArgumentNullException(nameof(options));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            
         }
 
-        private static JsonSerializer _serializer = new JsonSerializer();
+        private static JsonSerializer _serializer = new JsonSerializer
+        {
+            NullValueHandling = NullValueHandling.Ignore
+        };
 
         //private async Task<TResult> MakeCall<TResult>(string method, IDictionary<string, string[]> args, CancellationToken cancellationToken)
         //{
@@ -61,7 +65,7 @@ namespace Skytecs.UniSenderApiClient
         //    }
         //}
 
-        public async Task<SendResult> Send(SendRequest request)
+        public async Task<UniOneSendResult> Send(UniOneSendRequest request)
         {
             if (request == null)
             {
@@ -93,17 +97,23 @@ namespace Skytecs.UniSenderApiClient
 
             if (!response.IsSuccessStatusCode)
             {
-                var errorText = await response.Content.ReadAsStringAsync();
-                _logger.LogError(errorText);
-                throw new InvalidOperationException($"Error sending email: {response.StatusCode} - {response.ReasonPhrase}");
+                var message = $"Error sending email: {response.StatusCode} - {response.ReasonPhrase}";
+
+                _logger.LogError(message);
             }
 
             using (var stream = await response.Content.ReadAsStreamAsync())
             using (var text = new StreamReader(stream))
-            using (var json = new JsonTextReader(text))
             {
-                return _serializer.Deserialize<SendResult>(json);
+                var message = text.ReadToEnd();
+                _logger.LogTrace(message);
+                using (var messageReader = new StringReader(message))
+                using (var json = new JsonTextReader(messageReader))
+                {
+                    return _serializer.Deserialize<UniOneSendResult>(json);
+                }
             }
+
         }
     }
 
@@ -218,7 +228,7 @@ namespace Skytecs.UniSenderApiClient
         public Options Options { get; set; }
     }
 
-    public class SendRequest
+    public class UniOneSendRequest
     {
 
         [JsonProperty("api_key")]
@@ -231,7 +241,7 @@ namespace Skytecs.UniSenderApiClient
         public UniOneMessage Message { get; set; }
     }
 
-    public class SendResult
+    public class UniOneSendResult
     {
         [JsonProperty("status")]
         public string Status { get; set; }
