@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
@@ -29,41 +28,6 @@ namespace Skytecs.UniSenderApiClient
         {
             NullValueHandling = NullValueHandling.Ignore
         };
-
-        //private async Task<TResult> MakeCall<TResult>(string method, IDictionary<string, string[]> args, CancellationToken cancellationToken)
-        //{
-        //    var uriBuilder = new UriBuilder(_options.BaseUrl);
-        //    uriBuilder.Path = $"{_options.Lang}/api/{method}";
-
-        //    var argsList = new List<KeyValuePair<string, string>>();
-        //    argsList.Add(new KeyValuePair<string, string>("format", _options.Format));
-        //    argsList.Add(new KeyValuePair<string, string>("api_key", _options.ApiKey));
-
-        //    if (args != null)
-        //    {
-        //        argsList.AddRange(args.SelectMany(x => x.Value.Select(value => new KeyValuePair<string, string>(x.Key, value))));
-        //    }
-
-        //    var client = new HttpClient();
-
-        //    var content = new FormUrlEncodedContent(argsList);
-
-
-        //    var response = await client.PostAsync(uriBuilder.Uri, content, cancellationToken);
-
-        //    if (!response.IsSuccessStatusCode)
-        //    {
-        //        throw new HttpRequestException();
-        //    }
-
-        //    using (var ms = new MemoryStream())
-        //    using (var sr = new StreamReader(ms))
-        //    using (var jr = new JsonTextReader(sr))
-        //    {
-        //        await response.Content.CopyToAsync(ms);
-        //        return _serializer.Deserialize<TResult>(jr);
-        //    }
-        //}
 
         public async Task<UniOneSendResult> Send(UniOneSendRequest request)
         {
@@ -97,9 +61,9 @@ namespace Skytecs.UniSenderApiClient
 
             if (!response.IsSuccessStatusCode)
             {
-                var message = $"Error sending email: {response.StatusCode} - {response.ReasonPhrase}";
+                var message = "Error sending email: {StatusCode} - {ReasonPhrase}";
 
-                _logger.LogError(message);
+                _logger.LogError(message, response.StatusCode, response.ReasonPhrase);
             }
 
             using (var stream = await response.Content.ReadAsStreamAsync())
