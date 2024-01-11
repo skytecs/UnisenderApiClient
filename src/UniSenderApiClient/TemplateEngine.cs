@@ -5,10 +5,10 @@ using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Skytecs.UniSenderApiClient
+namespace UniSenderApiClient
 {
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum UniOneTemplateEngine
+    public enum TemplateEngine
     {
         [EnumMember(Value = "simple")]
         Simple,

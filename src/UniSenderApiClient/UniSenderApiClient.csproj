@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-    <Description>Nuget package which adds support for Unisender and UniOne APIs for .NET Core apps.</Description>
-    <Version>1.0.2-alpha</Version>
+    <TargetFrameworks>netstandard2.1;net8.0</TargetFrameworks>
+    <Description>Nuget package which adds support for Unisender Go API for .NET Core apps.</Description>
+    <Version>1.0.3-alpha</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/skytecs/UnisenderApiClient</RepositoryUrl>
     <PackageLicenseUrl>https://raw.githubusercontent.com/skytecs/UnisenderApiClient/master/LICENSE</PackageLicenseUrl>

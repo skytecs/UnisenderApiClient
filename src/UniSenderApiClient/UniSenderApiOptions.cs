@@ -1,13 +1,11 @@
 ﻿using System;
 
-namespace Skytecs.UniSenderApiClient
+namespace UniSenderApiClient
 {
-    public class UniOneOptions
+    public class UniSenderApiOptions
     {
-        private const string DefaultUrl = "https://one.unisender.com";
+        private const string DefaultUrl = "https://go1.unisender.ru";
         private Uri _baseUrl;
-        private string _lang;
-        private string _format;
 
         public Uri BaseUrl
         {

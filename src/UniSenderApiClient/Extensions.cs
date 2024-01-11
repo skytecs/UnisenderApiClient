@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Skytecs.UniSenderApiClient
+namespace UniSenderApiClient
 {
-    public static class UniOneClientExtensions
+    public static class Extensions
     {
-        public static IServiceCollection AddUniOneClient(this IServiceCollection services, Action<UniOneOptions> configure)
+        public static IServiceCollection AddUniOneClient(this IServiceCollection services, Action<UniSenderApiOptions> configure)
         {
             if (services == null)
             {
@@ -21,11 +21,11 @@ namespace Skytecs.UniSenderApiClient
             }
 
 
-            var options = new UniOneOptions();
+            var options = new UniSenderApiOptions();
 
             configure(options);
 
-            return services.AddSingleton(options).AddSingleton<IUniOneClient, UniOneClient>();
+            return services.AddSingleton(options).AddSingleton<IUniSenderClient, UniSenderClient>();
         }
     }
 }
